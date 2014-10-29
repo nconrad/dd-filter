@@ -1,0 +1,28 @@
+
+<div class="btn-group dd-filter">
+    <button ng-click="openDDSelector()" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" >
+        {{ddDisplayed}} <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <span class="dd-filter-close glyphicon glyphicon-remove pull-right"></span>
+        <div class="dd-filter-header">
+            <div class="dd-filter-title pull-left">{{ddTitle}}</div>
+            <input ng-model="ddModel" id="{{id}}" type="text" class="form-control" placeholder="{{ddPlaceholder}}">
+        </div>
+
+        <ul class="list-unstyled dd-filter-list" role="menu">
+            <li ng-repeat="item in items | filter : ddModel">
+
+                <a tabindex="{{$index}}" ng-click="ddSelect($index, item)" class="truncate pull-left">
+                    <span ng-if="item.name == ddDisplayed" 
+                      class="dd-filter-checked glyphicon glyphicon-ok pull-left">
+                    </span>
+                    {{item.name}}<!--<span class="pull-right">{{item.count}}</span>-->
+                </a>
+            </li>
+            <div class="dd-filter-empty" ng-show="(items | filter: ddModel).length == 0">
+                <b class="text-muted">No results</b>
+            </div>
+        </ul>
+    </ul>
+</div>
