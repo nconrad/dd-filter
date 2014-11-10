@@ -16,7 +16,7 @@ angular.module('dd-filter', [])
         link: function(scope, element, attrs) {
 
             // id for input field
-            scope.id = attrs.ddId;
+            scope.ddID = attrs.ddId;
 
             scope.ddTitle = attrs.ddTitle;
             scope.ddPlaceholder = attrs.ddPlaceholder;            
@@ -43,6 +43,7 @@ angular.module('dd-filter', [])
             scope.ddSelect = function($index, item) {
                 scope.selectedIndex = $index;
                 scope.ddDisplayed = item.name;
+                scope.$emit('ddChange', scope.ddDisplayed);             
             }
             
             // need to make work for state resets
@@ -57,7 +58,10 @@ angular.module('dd-filter', [])
             scope.closeDDSelector = function() {
                 angular.element(element)
                        .find('.input-group-btn').removeClass('open');
-            }            
+            }
+
+
+
 
         }
     }
