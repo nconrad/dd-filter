@@ -34,6 +34,11 @@ angular.module('dd-filter', [])
                 scope.ddDisplayed = "loading";
             }
 
+            // update default value
+            scope.$watch(attrs.ddDefault, function(value) {
+                scope.ddDisplayed = value;
+            })            
+
             // model to watch is the attr 'dd-data'
             scope.$watch(attrs.ddData, function(value) {
                 scope.items = value;
