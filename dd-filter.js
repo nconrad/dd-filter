@@ -12,8 +12,20 @@
 angular.module('dd-filter', [])
 .directive('ddFilter', function() {
     return {
+        terminal: true,
+        require: "?ngModel",
         templateUrl: 'lib/dd-filter/dd-filter.html',
-        link: function(scope, element, attrs) {
+        link: function(scope, element, attrs, ngModel) {
+            if (!ngModel) return;
+
+            /*
+            scope.$watch(
+                function(){
+                    return ngModel.$modelValue;
+                }, function(newValue, oldValue){
+                    console.log('in *thisDirective* model value changed...', newValue, oldValue);
+                }, true);
+            */
 
             // id for input field
             scope.ddID = attrs.ddId;
@@ -24,12 +36,16 @@ angular.module('dd-filter', [])
             // model for input
             scope.ddModel = attrs.ddModel;
 
+            // model for selected
+            scope.ddSelected = attrs.ddSelected;
+
             // custom classes
             scope.ddClass = attrs.ddClass;
 
             // if there is a default for the text box, use it
             if (attrs.ddDefault) {
                 scope.ddDisplayed = attrs.ddDefault;
+                //ngModel.$setViewValue( scope.ddDisplayed );                
             } else {
                 scope.ddDisplayed = "loading";
             }
@@ -37,6 +53,7 @@ angular.module('dd-filter', [])
             // update default value
             scope.$watch(attrs.ddDefault, function(value) {
                 scope.ddDisplayed = value;
+                ngModel.$setViewValue( scope.ddDisplayed );                
             })            
 
             // model to watch is the attr 'dd-data'
@@ -54,6 +71,7 @@ angular.module('dd-filter', [])
             scope.ddSelect = function($index, item) {
                 scope.selectedIndex = $index;
                 scope.ddDisplayed = item.name;
+                ngModel.$setViewValue( scope.ddDisplayed );
 
                 scope.$emit(attrs.ddChange, scope.ddDisplayed);             
             }
