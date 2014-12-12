@@ -44,11 +44,18 @@ angular.module('dd-filter', [])
                 scope.items = value;
             })
 
+            // watch title if isn't a string
+            scope.$watch(attrs.ddTitle, function(value) {
+                scope.ddTitle = value;
+            })
+
+
             scope.selectedIndex = -1;
             scope.ddSelect = function($index, item) {
                 scope.selectedIndex = $index;
                 scope.ddDisplayed = item.name;
-                scope.$emit('ddChange', scope.ddDisplayed);             
+
+                scope.$emit(attrs.ddChange, scope.ddDisplayed);             
             }
             
             // need to make work for state resets
