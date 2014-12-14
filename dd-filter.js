@@ -83,7 +83,6 @@ angular.module('dd-filter', [])
                     scope.ddDisplayed = attrs.ddEmptyString;
                 else 
                     scope.ddDisplayed = "None available";
-                console.log('setting as empty')
             }
 
 
