@@ -18,54 +18,42 @@ angular.module('dd-filter', [])
         link: function(scope, element, attrs, ngModel) {
             if (!ngModel) return;
 
-            /*
-            scope.$watch(
-                function(){
-                    return ngModel.$modelValue;
-                }, function(newValue, oldValue){
-                    console.log('in *thisDirective* model value changed...', newValue, oldValue);
-                }, true);
-            */
-
-            // id for input field
             scope.ddID = attrs.ddId;
-
             scope.ddTitle = attrs.ddTitle;
             scope.ddPlaceholder = attrs.ddPlaceholder;            
 
-            // model for input
-            scope.ddModel = attrs.ddModel;
+            // model for search filter
+            scope.ddModel;
 
-            // model for selected
-            scope.ddSelected = attrs.ddSelected;
+            // if there is a default for the button, use it
+            if (attrs.ddDefault) scope.ddDisplayed = attrs.ddDefault;
 
-            // custom classes
-            scope.ddClass = attrs.ddClass;
+            // if there is data at start of runtime, set it
+            if (scope.items && scope.items.length > 0) scope.items = attrs.ddData;
+            else labelAsEmpty();
 
-            // if there is a default for the text box, use it
-            if (attrs.ddDefault) {
-                scope.ddDisplayed = attrs.ddDefault;
-                //ngModel.$setViewValue( scope.ddDisplayed );                
-            } else {
-                scope.ddDisplayed = "loading";
-            }
-
-            // update default value
+            // update default value if it changes
             scope.$watch(attrs.ddDefault, function(value) {
                 scope.ddDisplayed = value;
-                ngModel.$setViewValue( scope.ddDisplayed );                
+                ngModel.$setViewValue( scope.ddDisplayed );
             })            
 
-            // model to watch is the attr 'dd-data'
+            // update data if it changes
             scope.$watch(attrs.ddData, function(value) {
                 scope.items = value;
+
+                if (scope.items && attrs.ddRequired && scope.items.length > 0) 
+                    ngModel.$setValidity('required', true);
+                else 
+                    ngModel.$setValidity('required', false);
+
+                if (!scope.items || scope.items.length == 0) labelAsEmpty();                
             })
 
-            // watch title if isn't a string
+            // update title if it changes
             scope.$watch(attrs.ddTitle, function(value) {
                 scope.ddTitle = value;
             })
-
 
             scope.selectedIndex = -1;
             scope.ddSelect = function($index, item) {
@@ -90,7 +78,13 @@ angular.module('dd-filter', [])
                        .find('.input-group-btn').removeClass('open');
             }
 
-
+            function labelAsEmpty() {
+                if (attrs.ddEmptyString)
+                    scope.ddDisplayed = attrs.ddEmptyString;
+                else 
+                    scope.ddDisplayed = "None available";
+                console.log('setting as empty')
+            }
 
 
         }
