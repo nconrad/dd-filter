@@ -1,8 +1,8 @@
 /*
- * dd-filter.js 
+ * dd-filter.js
  * An Angular.js/Bootstrap dropdown directive with filter.
  *
- * Readme: 
+ * Readme:
  *  https://github.com/nconrad/dd-filter
  *
  * Authors:
@@ -20,7 +20,7 @@ angular.module('dd-filter', [])
 
             scope.ddID = attrs.ddId;
             scope.ddTitle = attrs.ddTitle;
-            scope.ddPlaceholder = attrs.ddPlaceholder;            
+            scope.ddPlaceholder = attrs.ddPlaceholder;
 
             // model for search filter
             scope.ddModel;
@@ -29,25 +29,25 @@ angular.module('dd-filter', [])
             if (attrs.ddDefault) scope.ddDisplayed = attrs.ddDefault;
 
             // if there is data at start of runtime, set it
-            if (scope.items && scope.items.length > 0) scope.items = attrs.ddData;
+            if (attrs.ddData && attrs.ddData.length > 0) scope.items = attrs.ddData;
             else labelAsEmpty();
 
             // update default value if it changes
             scope.$watch(attrs.ddDefault, function(value) {
                 scope.ddDisplayed = value;
                 ngModel.$setViewValue( scope.ddDisplayed );
-            })            
+            })
 
             // update data if it changes
             scope.$watch(attrs.ddData, function(value) {
                 scope.items = value;
 
-                if (scope.items && attrs.ddRequired && scope.items.length > 0) 
+                if (scope.items && attrs.ddRequired && scope.items.length > 0)
                     ngModel.$setValidity('required', true);
-                else 
+                else
                     ngModel.$setValidity('required', false);
 
-                if (!scope.items || scope.items.length == 0) labelAsEmpty();                
+                if (!scope.items || scope.items.length == 0) labelAsEmpty();
             })
 
             // update title if it changes
@@ -61,14 +61,14 @@ angular.module('dd-filter', [])
                 scope.ddDisplayed = item.name;
                 ngModel.$setViewValue( scope.ddDisplayed );
 
-                scope.$emit(attrs.ddChange, scope.ddDisplayed);             
+                scope.$emit(attrs.ddChange, scope.ddDisplayed);
             }
-            
+
             // need to make work for state resets
             scope.openDDSelector = function() {
                 angular.element(element).find('.input-group-btn').addClass('open');
                 setTimeout(function(){
-                    angular.element(element).find('input').focus(); 
+                    angular.element(element).find('input').focus();
                 }, 0);
             }
 
@@ -81,7 +81,7 @@ angular.module('dd-filter', [])
             function labelAsEmpty() {
                 if (attrs.ddEmptyString)
                     scope.ddDisplayed = attrs.ddEmptyString;
-                else 
+                else
                     scope.ddDisplayed = "None available";
             }
 
