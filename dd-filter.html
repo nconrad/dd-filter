@@ -1,6 +1,6 @@
 
 <div class="btn-group dd-filter">
-    <button ng-click="openDDSelector()" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" >
+    <button ng-click="openDDSelector()" type="button" class="btn btn-default dropdown-toggle {{ddClass}}" data-toggle="dropdown" >
         {{ddDisplayed}} <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu">
@@ -11,10 +11,10 @@
         </div>
 
         <ul class="list-unstyled dd-filter-list" role="menu">
-            <li ng-repeat="item in items | filter : ddModel">
+            <li ng-repeat="item in items | filter : ddModel track by $index">
 
                 <a tabindex="{{$index}}" ng-click="ddSelect($index, item)" class="truncate pull-left">
-                    <span ng-if="item.name == ddDisplayed" 
+                    <span ng-if="item.name == ddDisplayed"
                       class="dd-filter-checked glyphicon glyphicon-ok pull-left">
                     </span>
                     {{item.name}}<!--<span class="pull-right">{{item.count}}</span>-->

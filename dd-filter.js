@@ -21,6 +21,7 @@ angular.module('dd-filter', [])
             scope.ddID = attrs.ddId;
             scope.ddTitle = attrs.ddTitle;
             scope.ddPlaceholder = attrs.ddPlaceholder;
+            scope.ddClass = attrs.ddClass;
 
             // model for search filter
             scope.ddModel;
