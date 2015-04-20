@@ -63,13 +63,13 @@ dd-class        | Adds additional classes to button class (string)              
 
 - Interaction/design inspired by Github's filterable dropdown menus.
 - dd-filter is made for angular, is lightweight, and serves one purpose.
-- Easy to use.
-- Simple and fun!
+- Simple, easy to use, and fun!
 
 
 ## Contributing
 
 Create an issue, or
+
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Commit your changes: `git commit -m 'Add some feature'`
