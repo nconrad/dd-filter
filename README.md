@@ -31,7 +31,6 @@ angular.module('MyApp', ['ui.router', 'dd-filter', ... ])
          .then(function(myData) {
              $scope.myData = myData;
              $scope.selectedItem = myData[0]; // use first item default
-             $scope.loading = false;
          })
 ```
 
