@@ -40,13 +40,12 @@ angular.module('dd-filter', [])
 
             // update data if it changes
             attrs.$observe('items', function(value) {
-                console.log('change', value)
                 if (scope.items && attrs.ddRequired && scope.items.length > 0)
                     ngModel.$setValidity('required', true);
                 else
                     ngModel.$setValidity('required', false);
 
-                if (!scope.items || scope.items.length == 0) labelAsEmpty();
+                if (!scope.items || scope.items.length === 0) labelAsEmpty();
             })
 
 
