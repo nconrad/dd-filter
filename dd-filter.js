@@ -30,7 +30,6 @@ angular.module('dd-filter', [])
             // model for search filter
             scope.ddModel;
 
-            console.log(attrs.ddEmptyString)
             // if there is data at start of runtime, set it
             if (scope.items && scope.items.length === 0 )
                 labelAsEmpty();
