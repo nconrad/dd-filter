@@ -10,39 +10,38 @@
  *
 */
 angular.module('dd-filter', [])
-.directive('ddFilter', function() {
+.directive('ddFilter', ['$timeout', function($timeout) {
     return {
+        restrict: 'EA',
         terminal: true,
-        require: "?ngModel",
+        require: '?ngModel',
+        scope: {
+            ddID: '@ddID',
+            ddClass: '@ddClass',
+            ddPlaceholder: '@ddPlaceholder',
+            ddTitle: '@ddTitle',
+            items: '=ddData',
+            ngModel: '=ngModel'
+        },
         templateUrl: 'lib/dd-filter/dd-filter.html',
         link: function(scope, element, attrs, ngModel) {
             if (!ngModel) return;
 
-            scope.ddID = attrs.ddId;
-            scope.ddTitle = attrs.ddTitle;
-            scope.ddPlaceholder = attrs.ddPlaceholder;
-            scope.ddClass = attrs.ddClass;
-
             // model for search filter
             scope.ddModel;
 
-            // if there is a default for the button, use it
-            if (attrs.ddDefault) scope.ddDisplayed = attrs.ddDefault;
-
+            console.log(attrs.ddEmptyString)
             // if there is data at start of runtime, set it
-            if (attrs.ddData && attrs.ddData.length > 0) scope.items = attrs.ddData;
-            else labelAsEmpty();
+            if (scope.items && scope.items.length === 0 )
+                labelAsEmpty();
 
-            // update default value if it changes
-            scope.$watch(attrs.ddDefault, function(value) {
-                scope.ddDisplayed = value;
-                ngModel.$setViewValue( scope.ddDisplayed );
+            scope.$watch('ngModel', function(item) {
+                if (item) scope.ddDisplayed = item.name;
             })
 
             // update data if it changes
-            scope.$watch(attrs.ddData, function(value) {
-                scope.items = value;
-
+            attrs.$observe('items', function(value) {
+                console.log('change', value)
                 if (scope.items && attrs.ddRequired && scope.items.length > 0)
                     ngModel.$setValidity('required', true);
                 else
@@ -51,26 +50,23 @@ angular.module('dd-filter', [])
                 if (!scope.items || scope.items.length == 0) labelAsEmpty();
             })
 
-            // update title if it changes
-            scope.$watch(attrs.ddTitle, function(value) {
-                scope.ddTitle = value;
-            })
 
             scope.selectedIndex = -1;
             scope.ddSelect = function($index, item) {
                 scope.selectedIndex = $index;
                 scope.ddDisplayed = item.name;
-                ngModel.$setViewValue( scope.ddDisplayed );
+                ngModel.$setViewValue( item );
 
-                scope.$emit(attrs.ddChange, scope.ddDisplayed);
+                if (attrs.ddChange)
+                    scope.$emit(attrs.ddChange, scope.ddDisplayed);
             }
 
             // need to make work for state resets
             scope.openDDSelector = function() {
                 angular.element(element).find('.input-group-btn').addClass('open');
-                setTimeout(function(){
+                $timeout(function(){
                     angular.element(element).find('input').focus();
-                }, 0);
+                });
             }
 
             // need to make work for state resets
@@ -85,8 +81,6 @@ angular.module('dd-filter', [])
                 else
                     scope.ddDisplayed = "None available";
             }
-
-
         }
     }
-})
+}])
