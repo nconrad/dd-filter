@@ -5,9 +5,9 @@ angular.js dropdown directive with filter
 
 ## Basic Usage
 
-- Tested with Angular 1.3+ and Bootstrap 3.0+
+Tested with Angular 1.3+ and Bootstrap 3.0+
 
-1) src dd-filter.js and make `dd-filter` an angular dependency
+1) Include dd-filter.js, dd-filter.css, and make `dd-filter` an angular dependency
 ```
 angular.module('MyApp', ['ui.router', 'dd-filter', ... ])
 .config( ... )
@@ -31,7 +31,6 @@ angular.module('MyApp', ['ui.router', 'dd-filter', ... ])
          .then(function(myData) {
              $scope.myData = myData;
              $scope.selectedItem = myData[0]; // use first item default
-             $scope.loading = false;
          })
 ```
 
@@ -41,7 +40,7 @@ Note: myData should be an object of the form
 ```
 
 
-Options:
+## Options
 
 
 Attribute       | What it does..                                                         | Watched?
@@ -59,17 +58,17 @@ dd-class        | Adds additional classes to button class (string)              
 
 
 
-### Why?
+## Why?
 
 - Interaction/design inspired by Github's filterable dropdown menus.
 - dd-filter is made for angular, is lightweight, and serves one purpose.
-- Easy to use.
-- Simple and fun!
+- Simple, easy to use, and fun!
 
 
 ## Contributing
 
 Create an issue, or
+
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Commit your changes: `git commit -m 'Add some feature'`
